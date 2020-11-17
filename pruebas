@@ -1,0 +1,4 @@
+from listas import LinkedList
+
+l=LinkedList()
+print (f"L essta vacia? {l.is_empty()})
