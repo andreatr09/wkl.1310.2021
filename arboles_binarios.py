@@ -84,12 +84,38 @@ class BinarySerchTree:
 			return self.__search( nodo.right , value )
 
 	def remove( self , value ):
-		print( "ELIMINANDO" , encontrado.data )
-		encontrado = self.search( value )
-		# NOTE: CASO UNO --> ELIMINAR HOJA
-		if encontrado.left == None and encontrado.right == None:
-			encontrado = None
-		# NOTE: CASO DOS --> ELIMINAR PRADRE UN SOLO HIJO , SEA DERECHO O IZQUIERDO
-		elif (encontrado.left != None and encontrado.righ  == None) or \
-			(encontrado.left == None and encontrado.righ  != None):
-			print( "A ELIMINAR:" , encontrado.data )
+		if self.__root == None:
+			print( "NO HAY NADA QUE ELIMINAR" )
+		else:
+			self._remove( padre_hi , padre_hd , actual , value )
+
+	def _remove( padre_hi , padre_hd , actual , value ):
+		if actual == None:
+			print( "CASO BASE" )
+			return None
+		elif actual.data == value: #CASO BASE
+			print( "ENCONTRADO: " , actual.data )
+			# NOTE: CASO UNO: HOJA
+			if actual.left == None and actual.right == None:
+				if padre_hi != None:
+					padre_hi.left = None
+				else:
+					padre_hd.right = None
+			# NOTE: CASO DOS: CON UN HIJO
+			if ( actual.left != None and actual.right == None ) or ( actual.left == None and actual.right != None ):
+				print( "Es un nodo con un hijo" , actual.data )
+				if actual.left != None:
+					actual.data = actual.left.data
+					actual.left = None
+				else:
+					actual.data = actual.right.data
+					actual.righ = None
+			# NOTE: CASO TRES: CON LOS DOS HIJOS
+
+			#return actual
+		elif value < actual.data:
+			print( "BUSCAR A LA IZQUIERDA" )
+			self._remove( actual , None , actual.left , value )
+		else:
+			print( "BUSCAR A LA DERECHA" )
+			self._remove( None , actual , actual.right , value )
